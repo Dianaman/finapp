@@ -1,0 +1,25 @@
+<app-header title="Resumen"></app-header>
+
+<ion-content>
+    <ion-accordion-group>
+        <ion-accordion *ngFor="let d of data" [value]="d.title">
+            <ion-item slot="header">
+                <ion-label>{{d.title}}</ion-label>
+                <ng-container *ngTemplateOutlet="sumTmp; context: {sum: (d.details | sum)}">
+                </ng-container> 
+              </ion-item>
+          
+              <ion-list slot="content">
+                <ion-item *ngFor="let detail of d.details">
+                    <ion-label>{{detail.date}}</ion-label>
+                    <ion-label>$ {{detail.amount}}</ion-label>
+                </ion-item>
+              </ion-list>
+        </ion-accordion>
+    </ion-accordion-group>
+
+</ion-content>
+
+<ng-template #sumTmp let-sum="sum">
+    <ion-label class="bold" [ngClass]="sum >= 0 ? 'success' : 'danger'">${{sum}}</ion-label>
+</ng-template>
